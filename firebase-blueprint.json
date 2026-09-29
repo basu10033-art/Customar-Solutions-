@@ -1,0 +1,77 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile across Customer, Vendor, Delivery Partner, Technician, Cab Driver, and Admin roles.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "User ID matching auth.uid" },
+        "name": { "type": "string", "description": "Full name" },
+        "email": { "type": "string", "description": "Email address" },
+        "phone": { "type": "string", "description": "Phone number" },
+        "role": { "type": "string", "enum": ["customer", "vendor", "delivery", "technician", "driver", "admin"], "description": "Role in platform" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["uid", "name", "role"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Hyperlocal order across grocery, food, pharmacy, etc.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Order unique identifier" },
+        "customerId": { "type": "string", "description": "Customer user ID" },
+        "vendorId": { "type": "string", "description": "Vendor ID" },
+        "deliveryPartnerId": { "type": "string", "description": "Assigned delivery partner ID" },
+        "status": {
+          "type": "string",
+          "enum": [
+            "PLACED",
+            "VENDOR_NOTIFIED",
+            "ACCEPTED",
+            "PREPARING",
+            "READY_FOR_PICKUP",
+            "DELIVERY_PARTNER_SEARCHING",
+            "DELIVERY_ASSIGNED",
+            "PICKED_UP",
+            "OUT_FOR_DELIVERY",
+            "ARRIVING",
+            "DELIVERED",
+            "CANCELLED"
+          ],
+          "description": "Current state machine stage"
+        },
+        "totalAmount": { "type": "number", "description": "Total order amount" },
+        "deliveryOtp": { "type": "string", "description": "OTP for delivery verification" }
+      },
+      "required": ["id", "customerId", "vendorId", "status", "totalAmount"]
+    },
+    "ServiceBooking": {
+      "title": "ServiceBooking",
+      "description": "Home technician and cab booking records.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Booking ID" },
+        "customerId": { "type": "string", "description": "Customer ID" },
+        "serviceType": { "type": "string", "description": "Category: Electrician, Plumber, Cab, etc." },
+        "status": { "type": "string", "description": "Current booking status" },
+        "totalFare": { "type": "number", "description": "Fare or charge" }
+      },
+      "required": ["id", "customerId", "serviceType", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile collection"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Platform customer orders"
+    },
+    "/serviceBookings/{bookingId}": {
+      "schema": "ServiceBooking",
+      "description": "Platform service & cab bookings"
+    }
+  }
+}

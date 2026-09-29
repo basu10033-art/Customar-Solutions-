@@ -1,0 +1,6 @@
+{
+  "name": "Customar Solutions",
+  "description": "All-in-one hyperlocal delivery & services platform providing quick commerce, food, pharmacy, cabs, printing, and home services.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
